@@ -15,7 +15,7 @@ class BSTree {
         BSNode<T>* search(BSNode<T>* n, T e) const{
 
             if(n==nullptr){
-                throw runtime_error("Arbol vacio");
+                throw runtime_error("Elemento no encontrado");
             }else if(n->elem < e){
                 return search(n->right, e);
             }else if(n->elem > e){
@@ -26,17 +26,19 @@ class BSTree {
 
         }
 
-        BSNode<T>* insert(BSNode<T>* n, T e) const{
+        BSNode<T>* insert(BSNode<T>* n, T e){
 
             if(n==nullptr){
-                n = new BSNode<T>(e);
+                nelem++;
+                return new BSNode<T>(e);
             }else if(n->elem == e){
                 throw runtime_error("Duplicated element");
             }else if(n->elem < e){
-                return insert(n->right, e);
+                n->right = insert(n->right, e);
             }else{
-                return insert(n->left, e);
+                n->left = insert(n->left, e);
             }
+            return n;
 
         }
 
@@ -60,16 +62,18 @@ class BSTree {
 
         }
 
-        T remove_max(BSNode<T>* n) const{
-            if(n->right != nullptr){
-                return n->left;
-            }else{
-                n->right = remove_max(n->right);
-                return n;
+        BSNode<T>* remove_max(BSNode<T>* n){
+            if(n == nullptr){
+                return nullptr;
             }
+            if(n->right == nullptr){
+                return n->left;
+            }
+            n->right = remove_max(n->right);
+            return n;
         }
 
-        BSNode<T>* remove(BSNode<T>* root,T e) const{
+        BSNode<T>* remove(BSNode<T>* root,T e){
             if(root == nullptr){
                 throw runtime_error("Elemento no encontrado");
             }else if(root->elem < e){
@@ -79,9 +83,13 @@ class BSTree {
             }else{
                 if(root->left != nullptr && root->right != nullptr){
                     root->elem = max(root->left);
-                    root.left = remove_max(root.left);
+                    root->left = remove_max(root->left);
+                    nelem--;
                 }else{
-                    root = root.left != nullptr ? root.left : root.right;
+                    BSNode<T>* child = (root->left != nullptr) ? root->left : root->right;
+                    delete root;
+                    nelem--;
+                    return child;
                 }
             }
             return root;
@@ -110,7 +118,7 @@ class BSTree {
         }
 
         T search (T e) const{
-            return search(root, e).elem;
+            return search(root, e)->elem;
 
         }
 
