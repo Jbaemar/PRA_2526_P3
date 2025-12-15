@@ -23,7 +23,7 @@ class HashTable: public Dict<V> {
         int h(std::string key){//Cáulcula el índice de la tabla hash para una clave dada.
 
             int sum = 0;
-            for(int i = 0; i < n; i++){
+            for(int i = 0; i < key.length(); i++){
                 sum += int(key[i]);
             }
             return sum % max;
