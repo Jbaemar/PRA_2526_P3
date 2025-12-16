@@ -86,13 +86,15 @@ class BSTree {
                     root->left = remove_max(root->left);
                     nelem--;
                 }else{
-                    BSNode<T>* child = (root->left != nullptr) ? root->left : root->right;
-                    delete root;
+                    if(root->left != nullptr){
+                        root = root->left;
+                    }else{
+                        root = root->right;
+                    }
                     nelem--;
-                    return child;
                 }
-            }
             return root;
+            }
         }
 
         void delete_cascade(BSNode<T>* n){
