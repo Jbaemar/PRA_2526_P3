@@ -95,6 +95,40 @@ class HashTable: public Dict<V> {
         V operator[](std::string key){//sobrecarga del operador[] para buscar un valor por su clave
             return search(key);
         }
+
+        /* HashTable<V> rehash_1(){
+            ListLinked<TableEntry<V>>* table = new ListLinked<TableEntry<V>>[max * 2];
+            for(int i = 0; i < max; i++){
+                for(int j = 0; j < this->table[i].size();j++){
+                    TableEntry<V> te = this->table[i].get(j);
+                    int index = h(te.key);
+                    table[index].append(te);
+                }
+            }
+
+        } */
+
+        HashTable<V> rehash(){
+            HashTable<V> Table_2(max*2);
+            for(int i = 0; i<max; i++){
+                for(int j = 0; j < table[i].size(); j++){
+                    TableEntry<V> te = table[i].get(j);
+                    Table_2.insert(te.key, te.value);
+                }
+            }
+            return Table_2;
+        }
+
+        /* HashTable<V> rehash_2(){
+            HashTable<V> newTable(max * 2);
+            for(int i = 0; i < max; i++){
+                for(int j = 0; j < table[i].size(); j++){
+                    TableEntry<V> te = table[i].get(j);
+                    newTable.insert(te.key, te.value);
+                }
+            }
+            return newTable;
+        } */
 };
 
 #endif
