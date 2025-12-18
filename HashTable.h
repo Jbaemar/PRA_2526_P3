@@ -11,14 +11,15 @@
 
 using namespace std;
 template <typename V>
-
+//Esta clase implementará la interfaz Dict<V> mediante una tabla hash con encadenamiento. 
+//Más concretamente, la tabla hash se implementará como un array de punteros a listas de tipo ListLinked<T>
 class HashTable: public Dict<V> {
 
     private:
 
-        int n;
-        int max;
-        ListLinked<TableEntry<V>>* table;
+        int n; //numero actual de entradas
+        int max;//capacidad máxima de la tabla
+        ListLinked<TableEntry<V>>* table;//array de listas enlazadas
 
         int h(std::string key){//Cáulcula el índice de la tabla hash para una clave dada.
 
@@ -32,7 +33,7 @@ class HashTable: public Dict<V> {
         
 
     public:
-        HashTable(int size){
+        HashTable(int size){//constructor que inicializa la tabla hash
             max = size;
             n = 0;
             table = new ListLinked<TableEntry<V>>[max];
@@ -43,7 +44,7 @@ class HashTable: public Dict<V> {
         }
         
 
-        V search(std::string key) override{
+        V search(std::string key) override{//busca un par clave→valor por su clave y devuelve el valor asociado.
             int index = h(key);
             TableEntry<V> te(key);
             int pos = table[index].search(te);
@@ -54,7 +55,7 @@ class HashTable: public Dict<V> {
 
         }
 
-        void insert(std::string key, V value) override{
+        void insert(std::string key, V value) override{//inserta un par clave→valor en la tabla hash
             int index = h(key);
             TableEntry<V> te(key, value);
             int pos = table[index].search(te);
@@ -66,7 +67,7 @@ class HashTable: public Dict<V> {
             
         }
 
-        V remove(std::string key) override{
+        V remove(std::string key) override{//elimina un par clave→valor por su clave y devuelve el valor asociado.
             int index = h(key);
             TableEntry<V> te(key);
             int pos = table[index].search(te);
@@ -84,14 +85,14 @@ class HashTable: public Dict<V> {
             return max;
         }
 
-        friend std::ostream& operator<<(std::ostream &out, const HashTable<V> &th){
+        friend std::ostream& operator<<(std::ostream &out, const HashTable<V> &th){//sobrecarga para imprimir toda la tabla hash
             for(int i = 0;i < th.max; i++){
                 out << "Indice " << i << ": " << th.table[i] << "\n";
             }
             return out;
         }
         
-        V operator[](std::string key){
+        V operator[](std::string key){//sobrecarga del operador[] para buscar un valor por su clave
             return search(key);
         }
 };

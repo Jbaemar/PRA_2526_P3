@@ -7,6 +7,9 @@
 using namespace std;
 template <typename V>
 
+
+//Los pares clave→valor se representarán mediante la clase genérica TableEntry<V>, 
+//con tipo std::string para las claves y tipo paramétrico V para los valores. 
 class TableEntry {
     public:
         string key;
@@ -40,12 +43,12 @@ class TableEntry {
             return os;
         }
 
-        friend bool operator<(const TableEntry<V> &te1, const TableEntry<V> &te2){
+        friend bool operator<(const TableEntry<V> &te1, const TableEntry<V> &te2){//compara dos TableEntry por su clave
             return te1.key < te2.key;
         }
         
         
-        friend bool operator>(const TableEntry<V> &te1, const TableEntry<V> &te2){
+        friend bool operator>(const TableEntry<V> &te1, const TableEntry<V> &te2){//compara dos TableEntry por su clave
             return te1.key > te2.key;
         }
     

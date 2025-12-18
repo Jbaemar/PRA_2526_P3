@@ -12,7 +12,7 @@ class BSTree {
         int nelem;
         BSNode<T>* root;
 
-        BSNode<T>* search(BSNode<T>* n, T e) const{
+        BSNode<T>* search(BSNode<T>* n, T e) const{//busca un elemento en el árbol y devuelve el nodo que lo contiene
 
             if(n==nullptr){
                 throw runtime_error("Elemento no encontrado");
@@ -26,7 +26,7 @@ class BSTree {
 
         }
 
-        BSNode<T>* insert(BSNode<T>* n, T e){
+        BSNode<T>* insert(BSNode<T>* n, T e){//inserta un elemento en el árbol
 
             if(n==nullptr){
                 nelem++;
@@ -42,7 +42,7 @@ class BSTree {
 
         }
 
-        void print_inorder(std::ostream &out, BSNode<T>* n) const{
+        void print_inorder(std::ostream &out, BSNode<T>* n) const{//imprime el árbol en orden desde la rama de la izquierda hacia la derecha
             if(n != nullptr){
                 print_inorder(out, n->left);
                 out << n->elem << " ";
@@ -51,7 +51,7 @@ class BSTree {
 
         }
 
-        T max(BSNode<T>* n) const{
+        T max(BSNode<T>* n) const{//devuelve el máximo elemento del árbol
             if(n == nullptr){
                 throw runtime_error("Elemento no encontrado");
             }else if(n->right != nullptr){
@@ -62,7 +62,7 @@ class BSTree {
 
         }
 
-        BSNode<T>* remove_max(BSNode<T>* n){
+        BSNode<T>* remove_max(BSNode<T>* n){//elimina el máximo elemento del árbol
             if(n == nullptr){
                 return nullptr;
             }
@@ -73,7 +73,7 @@ class BSTree {
             return n;
         }
 
-        BSNode<T>* remove(BSNode<T>* root,T e){
+        BSNode<T>* remove(BSNode<T>* root,T e){//elimina un elemento del árbol y 
             if(root == nullptr){
                 throw runtime_error("Elemento no encontrado");
             }else if(root->elem < e){
@@ -97,7 +97,7 @@ class BSTree {
             }
         }
 
-        void delete_cascade(BSNode<T>* n){
+        void delete_cascade(BSNode<T>* n){//elimina todos los nodos del árbol de forma recursiva
             if(n != nullptr){
                 delete_cascade(n->left);
                 delete_cascade(n->right);
@@ -135,7 +135,7 @@ class BSTree {
         }
 
 
-        friend ostream& operator<<(ostream &out, const BSTree<T> &bst){
+        friend ostream& operator<<(ostream &out, const BSTree<T> &bst){//sobrecarga para imprimir el árbol  
             bst.print_inorder(out, bst.root);
             return out;
         }
